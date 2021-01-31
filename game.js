@@ -17,15 +17,27 @@ window.onload = () => {
     player = new Snake();
     fruit = createFruit();
 
-    background('black');
+    backgroundGrid();
+
+    drawFruit();
+
+    player.update();
+    player.checkFruit();
 
     then = Date.now();
     fixedUpdate();
 }
 
-function background(c) {
-    ctx.fillStyle = c;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+function backgroundGrid() {
+    for(let x = 0; x < tiles; x++){
+        for(let y = 0; y < tiles; y++){
+
+            ctx.fillStyle = (x + y) % 2 === 0 ? '#28363d' : '#2e3f47';
+            ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+            
+        }
+    }
+
 }
 
 function fixedUpdate() {
@@ -37,7 +49,7 @@ function fixedUpdate() {
     if (elapsed > fpsInterval) {
         then = now - (elapsed % fpsInterval);
 
-        background('black');
+        backgroundGrid();
 
         drawFruit();
 
@@ -47,7 +59,7 @@ function fixedUpdate() {
 }
 
 function drawFruit(){
-    ctx.fillStyle = 'purple';
+    ctx.fillStyle = 'rgb(255, 0, 100)';
     ctx.fillRect(fruit.x * tileSize, fruit.y * tileSize, tileSize, tileSize);
 }
 
@@ -118,7 +130,7 @@ class Snake {
     }
 
     draw() {
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.fillStyle = '#6d9197';
         ctx.fillRect(this.pos.x * tileSize, this.pos.y * tileSize, tileSize, tileSize);
 
         // draw tail tiles
